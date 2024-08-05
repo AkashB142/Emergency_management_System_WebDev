@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Help</title>
+
+    <link rel="stylesheet" href="Emergency.css">
+    
+    <script>
+        function changeLanguage(language) {
+            var element = document.getElementById("url");
+            element.value = language;
+            element.innerHTML = language;
+        }
+
+        function showDropdown() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+
+</head>
+<body>
+<div class="header"> 
+    <div >             
+    <a href="http://facebook.com/NationalPortalIndia" target="blank"><img src="Facebook.png" alt=""width="18" height="18"></a>
+    <a href="https://twitter.com/indiagovin" target="blank"><img src="Twitter.png" alt=""width="18" height="18"></a>
+    </div>
+
+    <div class="dropdown">
+        <!-- three dots -->
+        <ul class="dropbtn icons btn-right showLeft" onclick="showDropdown()">
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <!-- menu -->
+        <div id="myDropdown" class="dropdown-content">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </div>
+
+</div> 
+<div class="header2">
+    <br>
+    <img src="Emblem_of_India.svg.png" alt="Error" width="302.75" height="128">
+</div>
+<div class="main">
+    
+    <br>
+    <center><h1>REPORT EMERGENCY</h1></center>
+    <br><br>
+    <center><a href="http://127.0.0.1:5500/Medical.html"><button class="button1">MEDICAL</button></a></center>
+    <br><br>
+    <center><a href="http://127.0.0.1:5500/criminal.html"><button class="button1">CRIMINAL</button></a></center>
+    <br><br>
+    <center><a href="http://127.0.0.1:5500/other.html"><button class="button1">OTHER</button></a></center>
+    <br><br>
+</div>
+</body>
+</html>

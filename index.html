@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style1.css" />
+  <!-- <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+    integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Smart Help</title>
+  <style>
+    .btn {
+      color: white;
+      background-color: blue;
+      width: 83px;
+      height: 32px;
+      border-radius: 39px;
+      text-decoration: none;
+
+    }
+
+    #panic:a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background-color: gray;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="navbar">
+    <div class="imgs">
+      <img src="Emblem_of_India.svg.png" alt="logo" srcset="" />
+    </div>
+    <div class="t center">
+      <div>Emergency Helping System </div>
+    </div>
+    <div class="menubar">
+      <!-- <div class="list">When to use</div> -->
+      <div class="list">
+        <a href="">Features</a>
+      </div>
+      <div class="list">
+        <a href="">States</a>
+      </div>
+      <div class="list">
+        <a href="">Address</a>
+      </div>
+      <div class="list"><a href="">FAQ's</a></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="card">
+      <div class="signup center">
+        <div class="reg center">Record </div>
+      </div>
+      <div class="regbtn center">
+        <a href="/RegistratonForm.html" target="_blank"><button class="btn">Give Call</button></a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="signup center">
+        <div class="reg center">Panic</div>
+      </div>
+      <div class="regbtn center">
+        <div class="panic-container">
+
+          <div id="demo"></div>
+          <button class="btn" id="panic" onclick="getLocation()"> Panic </button>
+        </div>
+      </div>
+
+    </div>
+    <!-- <div class="card">
+        <div class="signup center">
+          <div class="reg center"> LogIn</div>
+        </div>
+        <div class="regbtn center">
+         
+          <a href="/LoginForm.html" target="_blank"><button class="btn">Login</button></a>
+         
+        </div>
+      </div> -->
+  </div>
+  </div>
+  <script>
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+      } else {
+        document.getElementById("demo").innerHTML = "Geolocation is not supported by this browser.";
+      }
+    }
+
+    function showPosition(position) {
+      document.getElementById("demo").innerHTML = "Latitude: " + position.coords.latitude +
+        "<br>Longitude: " + position.coords.longitude;
+      alert("Recorded your location point: Latitude: " + position.coords.latitude + ", Longitude: " + position.coords.longitude);
+    }
+
+    function showError(error) {
+      let errorMessage = "";
+      switch (error.code) {
+        case error.PERMISSION_DENIED:
+          errorMessage = "User denied the request for Geolocation.";
+          break;
+        case error.POSITION_UNAVAILABLE:
+          errorMessage = "Location information is unavailable.";
+          break;
+        case error.TIMEOUT:
+          errorMessage = "The request to get user location timed out.";
+          break;
+        case error.UNKNOWN_ERROR:
+          errorMessage = "An unknown error occurred.";
+          break;
+      }
+      document.getElementById("demo").innerHTML = errorMessage;
+    }
+  </script>
+</body>
+
+</html>

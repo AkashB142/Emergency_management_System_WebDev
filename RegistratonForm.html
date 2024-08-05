@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form</title>
+  <!-- Firebase App (the core Firebase SDK) -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <!-- Firebase Database -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+  <style>
+    body {
+      background-color: lightblue;
+    }
+
+    #capt {
+      font-size: larger;
+      font-weight: bolder;
+      margin-bottom: 4px;
+    }
+
+    #btn1 {
+      color: white;
+      background-color: blue;
+      border-radius: 10px;
+    }
+  </style>
+
+  <style>
+    body {
+      background-color: #f0f2f5;
+      font-family: Arial, sans-serif;
+    }
+
+    #registrationForm {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #registrationForm table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    #registrationForm caption {
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    #registrationForm th,
+    #registrationForm td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    #registrationForm th {
+      background-color: #f7f7f7;
+      width: 40%;
+    }
+
+    #registrationForm td input[type="text"],
+    #registrationForm td input[type="email"],
+    #registrationForm td input[type="password"],
+    #registrationForm td input[type="number"],
+    #registrationForm td input[type="date"],
+    #registrationForm td textarea {
+      width: calc(100% - 20px);
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    #registrationForm td input[type="radio"] {
+      margin-right: 10px;
+    }
+
+    #registrationForm td textarea {
+      resize: none;
+    }
+
+    #registrationForm td {
+      background-color: #f9f9f9;
+    }
+
+    #btnSubmit,
+    #btnReset {
+      color: white;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 1em;
+      cursor: pointer;
+      margin: 10px 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    #btnReset {
+      background-color: #6c757d;
+    }
+
+    #btnSubmit:hover,
+    #btnReset:hover {
+      background-color: #0056b3;
+    }
+
+    #btnReset:hover {
+      background-color: #5a6268;
+    }
+  </style>
+</head>
+
+<body>
+  <form id="registrationForm">
+    <table border="1" align="center" width="600" height="600px" bgcolor="white">
+      <caption id="capt">Registration Form</caption>
+      <tr>
+        <th>Enter your first name</th>
+        <td>
+          <input type="text" name="fn" id="fn" maxlength="10" title="Enter your first name"
+            placeholder="Enter your first name" required />
+        </td>
+      </tr>
+      <tr>
+        <th>Enter your last name</th>
+        <td><input type="text" name="ln" id="ln" /></td>
+      </tr>
+      <tr>
+        <th>Enter your email</th>
+        <td><input type="email" name="email" id="email" /></td>
+      </tr>
+      <tr>
+        <th>Enter your password</th>
+        <td><input type="password" name="password" id="password" /></td>
+      </tr>
+      <tr>
+        <th>ReEnter your password</th>
+        <td><input type="password" name="repassword" id="repassword" /></td>
+      </tr>
+      <tr>
+        <th>Enter your mobile</th>
+        <td><input type="number" name="mobile" id="mobile" /></td>
+      </tr>
+      <tr>
+        <th>Enter your address</th>
+        <td><textarea rows="8" cols="20" name="address" id="address"></textarea></td>
+      </tr>
+      <tr>
+        <th>Select your gender</th>
+        <td>
+          Male <input type="radio" name="gender" value="male" />
+          Female <input type="radio" name="gender" value="female" />
+        </td>
+      </tr>
+      <tr>
+        <th>Select your DOB</th>
+        <td><input type="date" name="dob" id="dob" /></td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center">
+          <input id="btnSubmit" type="submit" value="Submit" />
+          <input id="btnReset" type="reset" value="Reset" />
+        </td>
+      </tr>
+    </table>
+  </form>
+
+  <script>
+
+
+    // Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyC32OgJS_LusaTTer6eNHMS0LP-qNqJ_wU",
+      authDomain: "aku-maku.firebaseapp.com",
+      databaseURL: "https://aku-maku-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "aku-maku",
+      storageBucket: "aku-maku.appspot.com",
+      messagingSenderId: "494746049155",
+      appId: "1:494746049155:web:836b690c372a82b4e619b6",
+      measurementId: "G-6XHJSB44GP"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    var database = firebase.database();
+
+    // Reference to the registration form
+    var registrationForm = document.getElementById('registrationForm');
+
+    registrationForm.addEventListener('submit', function (e) {
+      e.preventDefault(); // Prevent form submission
+
+      // Get form values
+      var fn = document.getElementById('fn').value;
+      var ln = document.getElementById('ln').value;
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+      var repassword = document.getElementById('repassword').value;
+      var mobile = document.getElementById('mobile').value;
+      var address = document.getElementById('address').value;
+      var gender = document.querySelector('input[name="gender"]:checked').value;
+      var dob = document.getElementById('dob').value;
+
+      const DocId = Math.floor(Math.random() * 900000 + 1);
+      console.log(DocId);
+
+      // Create a new user object
+      var newUser = {
+        firstName: fn,
+        lastName: ln,
+        email: email,
+        password: password,
+        repassword: repassword,
+        mobile: mobile,
+        address: address,
+        gender: gender,
+        dob: dob
+      };
+
+
+
+      // Save user data to Firebase
+      database.ref('users/' + DocId).set(newUser, function (error) {
+        if (error) {
+          console.error('Error saving data:', error);
+        } else {
+          console.log('Data saved successfully');
+          alert('Registration successful!');
+          registrationForm.reset(); // Reset the form
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
